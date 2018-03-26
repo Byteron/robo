@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://items/emerald.gd" type="Script" id=1]
+
+[sub_resource type="StreamTexture" id=1]
+
+flags = 0
+load_path = "res://.import/emerald.png-343a4f7eeaf87881bb3234fdd4fa1532.stex"
+
+[node name="Emerald" type="Node2D"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Visibility" ]
+value = 2
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+texture = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="." index="1"]
+
+show_behind_parent = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision", "Material", "Pickable", "Visibility" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" index="0"]
+
+build_mode = 1
+polygon = PoolVector2Array( 0, -3, 2, -1, 2, 1, 0, 3, -1, 3, -3, 1, -3, -1, -1, -3, 0, -3 )
+
+
