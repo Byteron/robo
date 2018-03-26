@@ -16,7 +16,7 @@ extents = Vector2( 3, 4 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
-collision/safe_margin = 0.01
+collision/safe_margin = 0.001
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "Z Index", "collision" ]
 
@@ -78,7 +78,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="detect_wall_left" type="RayCast2D" parent="." index="5"]
 
-position = Vector2( 0, 4 )
+position = Vector2( 0, 3.5 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( -3.5, 0 )
@@ -86,7 +86,7 @@ collision_mask = 1
 
 [node name="detect_wall_right" type="RayCast2D" parent="." index="6"]
 
-position = Vector2( 0, 4 )
+position = Vector2( 0, 3.5 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 3.5, 0 )
@@ -375,30 +375,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="Jumping" type="Label" parent="Debug/Labels" index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 1.0
-margin_top = 97.0
-margin_right = 29.0
-margin_bottom = 102.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = ExtResource( 5 )
-text = "Jumping"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
-
-[node name="DirectionLabel" type="Label" parent="Debug/Labels" index="9"]
+[node name="DirectionLabel" type="Label" parent="Debug/Labels" index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -421,7 +398,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="Input" type="Label" parent="Debug/Labels" index="10"]
+[node name="Input" type="Label" parent="Debug/Labels" index="9"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -444,7 +421,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="Move" type="Label" parent="Debug/Labels" index="11"]
+[node name="Move" type="Label" parent="Debug/Labels" index="10"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -467,7 +444,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="Look" type="Label" parent="Debug/Labels" index="12"]
+[node name="Look" type="Label" parent="Debug/Labels" index="11"]
 
 anchor_left = 0.0
 anchor_top = 0.0

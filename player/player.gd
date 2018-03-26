@@ -5,9 +5,7 @@ const GRAVITY = 10
 const UP = Vector2(0,-1)
 
 # CHARACTER MOVEMENT CONSTANTS
-#const SPEED_MIN = 10
-const ACCELERATION = 15
-const DECELERATION = 30
+const ACCELERATION = 30
 const JUMPCOST = 10
 const TIMER_MAX = 400
 
@@ -68,7 +66,6 @@ func _process(delta):
 
 func _physics_process(delta):
 
-
 	if is_on_ceiling(): 
 		speed.y = 0
 		
@@ -123,10 +120,8 @@ func _physics_process(delta):
 		state.move.WALK:
 			regenerate_energy(delta)
 
-			if direction.input.x == 1 and not on_wall_look(): 
-				speed.x += ACCELERATION
-			elif direction.input.x == -1 and not on_wall_look():
-				speed.x -= ACCELERATION
+			if direction.input.x and not on_wall_look(): 
+				speed.x += ACCELERATION * direction.input.x
 			else: 
 				speed.x = int(speed.x * 0.6)
 			
@@ -158,10 +153,8 @@ func _physics_process(delta):
 		# J U M P
 		state.move.JUMP:
 			
-			if direction.input.x == 1 and not on_wall_look(): 
-				speed.x += ACCELERATION / 5
-			elif direction.input.x == -1 and not on_wall_look():
-				speed.x -= ACCELERATION / 5
+			if direction.input.x and not on_wall_look(): 
+				speed.x += ACCELERATION / 5 * direction.input.x
 			
 			if jump and on_floor():
 				speed.y = -JUMPFORCE
@@ -195,7 +188,8 @@ func _physics_process(delta):
 				if move_up:
 					speed.y = -SPEED_MAX / 3
 					energy -= 15 * delta
-				
+				if jump:
+					state.move.change(state.move.JUMP)
 				if on_wall() and not on_wall_look():
 					state.move.change(state.move.WALL)
 				if not move_up or energy <= 0 or not on_wall():
@@ -205,10 +199,8 @@ func _physics_process(delta):
 		# F A L L
 		state.move.FALL:
 			
-			if direction.input.x == 1 and not on_wall_look(): 
-				speed.x += ACCELERATION
-			elif direction.input.x == -1 and not on_wall_look():
-				speed.x -= ACCELERATION
+			if direction.input.x and not on_wall_look(): 
+				speed.x += ACCELERATION * direction.input.x
 			
 			if not motion.x and on_floor():
 				state.move.change(state.move.IDLE)
@@ -225,16 +217,15 @@ func _physics_process(delta):
 		# W A L L
 		state.move.WALL:
 			
-			speed.y = GRAVITY
-			energy -= 10 * delta
+			if not on_floor():
+				speed.y = GRAVITY
+				energy -= 10 * delta
 
 			if direction.input.x and not on_wall_look():
 				timer -= delta * 1000
 				timer = clamp(timer, 0, TIMER_MAX)
 				if timer == 0:
-					speed.x += ACCELERATION
-			else:
-				speed.x -= DECELERATION
+					speed.x += ACCELERATION * direction.input.x
 			
 			if energy < 1 or not on_wall():
 				state.move.change(state.move.FALL)
@@ -250,8 +241,8 @@ func _physics_process(delta):
 			elif not motion.x and on_floor():
 				state.move.change(state.move.IDLE)
 				
-			speed.x = clamp(speed.x, 0, SPEED_MAX)
-			motion.x = speed.x * direction.input.x
+			speed.x = clamp(speed.x, -SPEED_MAX, SPEED_MAX)
+			motion.x = speed.x
 			
 	if motion.y < 0: 
 		direction.move.y = -1
@@ -270,31 +261,18 @@ func _physics_process(delta):
 	
 	if direction.input.x: 
 		direction.look.x = direction.input.x
-
-#	if not motion.x or direction.input.x == - direction.move.x:
-#		if direction.input.x == - direction.move.x:
-#			speed.x = 0
-
-#	if direction.input.x or not motion.x:
-#		direction.move.x = direction.input.x
 	
 	if state.move.current == state.move.DASH:
 		speed.y = 0
 	
 	motion.y = speed.y
 	motion = move_and_slide(motion, UP)
-	speed.y = motion.y
+	speed = motion
 
 	energy = clamp(energy, 0, ENERGY_MAX)
-	
-#	jump = null
 
 func on_floor():
 	return $detect_floor_left.is_colliding() or $detect_floor_right.is_colliding()
-		
-#		if $detect_floor_left.is_colliding() or $detect_floor_right.is_colliding():
-#		var collider = RayCast2D.get_collider()
-#		if collider
 
 func on_wall():
 	return $detect_wall_left.is_colliding() or $detect_wall_right.is_colliding()
@@ -332,7 +310,6 @@ func update_ui():
 	$Debug/Labels/Attack.set_text(str("Attack: ", state.attack.get_current_string(), " (", state.attack.get_previous_string(), ")"))
 	$Debug/Labels/OnFloor.set_text(str("Floor: ", on_floor()))
 	$Debug/Labels/OnWall.set_text(str("Wall: ", on_wall()))
-	$Debug/Labels/Jumping.set_text(str("Jumping: ", jumping))
 	
 	
 	$Debug/Labels/Input.set_text(str("Input: ", direction.input))
