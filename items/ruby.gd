@@ -1,6 +1,6 @@
 extends Node2D
 
-export var value = 5
+export var value = 10
 
 func _ready():
 	$Area2D.connect("body_entered", self, "_collect_gem")

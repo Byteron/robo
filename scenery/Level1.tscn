@@ -82,18 +82,22 @@ position = Vector2( 256, -152 )
 [node name="Ruby" parent="Gems" index="4" instance=ExtResource( 5 )]
 
 position = Vector2( 72, -152 )
+value = 10
 
 [node name="Ruby3" parent="Gems" index="5" instance=ExtResource( 5 )]
 
 position = Vector2( -24, -152 )
+value = 10
 
 [node name="Ruby4" parent="Gems" index="6" instance=ExtResource( 5 )]
 
 position = Vector2( -88, -104 )
+value = 10
 
 [node name="Ruby6" parent="Gems" index="7" instance=ExtResource( 5 )]
 
 position = Vector2( -184, -104 )
+value = 10
 
 [node name="Saphir" parent="Gems" index="8" instance=ExtResource( 6 )]
 

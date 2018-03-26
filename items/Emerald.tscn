@@ -11,7 +11,7 @@ load_path = "res://.import/emerald.png-343a4f7eeaf87881bb3234fdd4fa1532.stex"
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Visibility" ]
-value = 2
+value = 5
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
